@@ -1,9 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const mongoose = require("mongoose")
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
-});
+mongoose.connect('mongodb://127.0.0.1:27017/practice_db') // database creation - create a database automatic
 
-module.exports = router;
+const userschema = mongoose.Schema({ // hmare database me kya kya hoga
+  username: String,
+  name: String,
+  age: Number
+})
+
+mongoose.model("user", userschema); // document create krega 
