@@ -8,4 +8,4 @@ const userschema = mongoose.Schema({ // hmare database me kya kya hoga
   age: Number
 })
 
-mongoose.model("user", userschema); // document create krega 
+module.exports = mongoose.model("user", userschema); // document create krega 
