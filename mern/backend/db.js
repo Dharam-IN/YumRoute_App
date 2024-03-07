@@ -1,17 +1,21 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-dotenv.config()
+dotenv.config();
 
 const url = process.env.MONGOURL;
 
-const mongoDB = () => {
-    mongoose.connect(url)
-    .then(() => {
+const mongoDB = async () => {
+    try {
+        await mongoose.connect(url, { useNewUrlParser: true });
         console.log("Database Connected");
-    }).catch((err) => {
-        console.log(`Error:- ${err}`)
-    })
-}
+
+        const fetchData = mongoose.connection.db.collection('foodCategory');
+        const data = await fetchData.find({}).toArray();
+        console.log(data);
+    } catch (err) {
+        console.error(`Error: ${err}`);
+    }
+};
 
 module.exports = mongoDB;
