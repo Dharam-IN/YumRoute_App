@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { IoMenu } from "react-icons/io5";
 import { IoMdClose } from "react-icons/io";
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Logo from './Images/YumRoutePNG.png'
 import Btn from './Btn';
 
 const Navbar = () => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const navigate = useNavigate()
 
     const menus = [
         {
@@ -35,6 +36,11 @@ const Navbar = () => {
         },
     ];
 
+    const handleLogOut = () => {
+        localStorage.removeItem("authToken");
+        navigate("/login")
+    }
+
     return (
         <>
             <nav className='bg-[#1B3C73] px-8 py-3 flex justify-between relative'>
@@ -59,12 +65,17 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className='flex items-center gap-3'>
-                    <div className="flex gap-3">
-                        {/* <NavLink className="bg-[#FF4121] hover:bg-[#FF7B62] px-5 py-2 text-white font-semibold text-1xl" to={'/login'} >Login</NavLink>
-                        <NavLink className="bg-[#FF4121] hover:bg-[#FF7B62] px-5 py-2 text-white font-semibold text-1xl" to={'/signup'} >SignUp</NavLink> */}
-                        <Btn BTNDATA={"Login"} Route={'/login'}/>
-                        <Btn BTNDATA={"SignUp"} Route={'/signup'}/>
-                    </div>
+                        {
+                            (!localStorage.getItem("authToken")) 
+                                ?   <div className="flex gap-3">
+                                        <Btn BTNDATA={"Login"} Route={'/login'}/>
+                                        <Btn BTNDATA={"SignUp"} Route={'/signup'}/>
+                                    </div> 
+                                :   <div className="flex gap-3">
+                                        <button className='bg-[#FF4121] rounded hover:bg-[#FF7B62] px-5 py-2 text-white font-semibold text-1xl' onClick={handleLogOut}>Logout</button>
+                                        <Btn BTNDATA={"My Order"} Route={'/signup'}/>
+                                    </div>
+                        }
                     <div className="w-12 h-12 cursor-pointer rounded-full overflow-hidden">
                         {/* <img src="https://avatars.githubusercontent.com/u/122605883?v=4" alt="user" /> */}
                         <h3 className='text-3xl pt-1 text-white'>D</h3>
