@@ -6,6 +6,7 @@ const Home = () => {
 
   const [foodCate, setFoodCate] = useState([]);
   const [foodItem, setFoodItem] = useState([]);
+  const [searchValue, setSearchValue] = useState("");
 
   const loadData = async () => {
     const response = await fetch("http://localhost:5000/api/fooddata", {
@@ -25,11 +26,17 @@ const Home = () => {
     loadData()
   }, [])
 
+
+  const handleSearch = (value) => {
+    setSearchValue(value)
+  }
+
+
   return (
     <>
 
       {/* Banner */}
-      <Banner/>
+      <Banner onSearch={handleSearch}/>
 
       <div>
         {
@@ -44,7 +51,7 @@ const Home = () => {
                 <div className="grid sm:grid-cols-2 md:grid-cols-4 grid-cols-1 gap-4">
                   {
                     foodItem != [] 
-                    ? foodItem.filter((item) => item.CategoryName === data.CategoryName)
+                    ? foodItem.filter((item) => (item.CategoryName === data.CategoryName) && (searchValue === "" || item.name.toLowerCase().includes(searchValue.toLowerCase())))
                     .map(filterItems => {
                       return(
                         <div key={filterItems._id}>

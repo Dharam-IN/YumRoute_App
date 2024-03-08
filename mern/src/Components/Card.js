@@ -4,7 +4,7 @@ import Btn from './Btn'
 const Card = ({img, heading, desc, options}) => {
   // var img = "https://media.istockphoto.com/id/612759522/photo/fake-junk-food-on-a-wooden-table.jpg?s=612x612&w=0&k=20&c=zI-m6WyTpm-imNeQLoASndk5VpAETKebPpZomSmgnas="
 
-  console.log(options)
+  // console.log(options)
   const keyoption = Object.keys(options[0])
   // console.log(keyoption)
 
