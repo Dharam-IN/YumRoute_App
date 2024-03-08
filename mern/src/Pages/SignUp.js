@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 
 const Signup = () => {
@@ -10,6 +10,8 @@ const Signup = () => {
     password: "",
     location: ""
   })
+
+  const navigate = useNavigate();
 
   // Password Show & Hide
   const [passshow, setPassshow] = useState(false)
@@ -47,7 +49,7 @@ const Signup = () => {
       if(!data.success){
         alert("Data not save")
       }else{
-        alert("Data Save in database")
+        navigate("/login")
       }
 
     }
@@ -55,7 +57,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="flex justify-center items-center h-[90vh] bg-gray-100">
+    <div className="flex justify-center items-center min-h-[90vh] bg-gray-100">
       <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
         <h2 className="text-2xl font-bold mb-4 text-center">Create an Account</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>

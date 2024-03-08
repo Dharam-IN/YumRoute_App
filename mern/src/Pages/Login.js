@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { FaEye } from "react-icons/fa";
 
 const Login = () => {
@@ -8,6 +8,8 @@ const Login = () => {
     email: "",
     password: ""
   })
+
+  const navigate = useNavigate()
 
   // Password Show & Hide
   const [passshow, setPassshow] = useState(false)
@@ -32,7 +34,7 @@ const Login = () => {
     if (!email || !password){
       alert("Please Fill All Details")
     }else{
-      const response = await fetch("http://localhost:5000/api/createuser", {
+      const response = await fetch("http://localhost:5000/api/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
@@ -45,7 +47,7 @@ const Login = () => {
       if(!data.success){
         alert("Data not save")
       }else{
-        alert("Data Save in database")
+        navigate("/");
       }
 
     }
@@ -53,8 +55,8 @@ const Login = () => {
   }
 
   return (
-    <div className="flex justify-center items-center h-[90vh] bg-gray-100">
-      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8">
+    <div className="flex justify-center items-center min-h-[90vh] bg-gray-100">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-md p-8 relative">
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="flex flex-col">
@@ -69,7 +71,7 @@ const Login = () => {
             </div>
           </div>
           <button type='submit' className="btn-submit bg-[#FF4121] hover:bg-secondary text-white font-bold py-2 px-4 rounded w-full transition-colors duration-300">
-            Sign Up
+            Log In
           </button>
         </form>
 
@@ -77,6 +79,7 @@ const Login = () => {
 
       </div>
     </div>
+
   );
 };
 
