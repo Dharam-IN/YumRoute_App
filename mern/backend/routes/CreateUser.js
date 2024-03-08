@@ -1,24 +1,38 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const user = require('../models/User')
+const user = require("../models/User");
+const { body, validationResult } = require("express-validator");
 
-router.post("/createuser",async function(req, res){
-    
+router.post(
+  "/createuser",
+    body("email").isEmail(),
+    body("password", "Incorrect Password").isLength({min: 5})
+    ,
+    async function (req, res) {
+        const errors = validationResult(req);
+
+        if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+        }
+
     try {
-        await user.create({
-            name: "Dharam",
-            location: "Jaipur",
-            email: "dharam@mail.com",
-            password: "dharampassword"
-        })
+      const newUser = new user({
+        name: req.body.name,
+        location: req.body.location,
+        email: req.body.email,
+        password: req.body.password,
+      });
 
-        res.json({success: true})
+      await newUser.save();
 
+      res.json({ success: true });
     } catch (error) {
-        console.log(`Error In user Create:- ${error}`)
-        res.json({success: false})
+      console.error(`Error creating user: ${error}`);
+      res
+        .status(500)
+        .json({ success: false, message: "Internal server error" }); // Informative error message
     }
-
-})
+  }
+);
 
 module.exports = router;
