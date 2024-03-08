@@ -47,7 +47,9 @@ const Login = () => {
       if(!data.success){
         alert("Data not save")
       }else{
+        localStorage.setItem("authToken", data.authToken);
         navigate("/");
+        console.log(localStorage.getItem("authToken"))
       }
 
     }
