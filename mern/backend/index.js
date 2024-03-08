@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 5000;
 const mongoDB = require('./db');
-const router = require("./routes/CreateUser")
+// const router = require("./routes/CreateUser")
 const cors = require('cors')
 
 mongoDB()
@@ -15,10 +15,11 @@ mongoDB()
 //     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 //     next();
 //   });
-    
+
 app.use(cors())
 app.use(express.json())
-app.use("/api", router)
+app.use("/api", require("./routes/CreateUser"))
+app.use("/api", require("./routes/DisplayData"))
 
 app.get("/", function(req,res){
     res.send("Hello World")
